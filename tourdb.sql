@@ -26,7 +26,7 @@ CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +35,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Tour trong nước'),(2,'Tour nước ngoài');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,16 +50,17 @@ CREATE TABLE `tour` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `trip` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `start_day` date NOT NULL,
-  `end_day` date NOT NULL,
-  `time` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `start_day` date DEFAULT NULL,
+  `end_day` date DEFAULT NULL,
   `adult_price` decimal(10,0) NOT NULL,
   `child_price` decimal(10,0) NOT NULL,
-  `category` int NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_loai_tour_idx` (`category`),
-  CONSTRAINT `fk_loai_tour` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+  KEY `fk_loai_tour_idx` (`category_id`),
+  CONSTRAINT `fk_loai_tour` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +69,7 @@ CREATE TABLE `tour` (
 
 LOCK TABLES `tour` WRITE;
 /*!40000 ALTER TABLE `tour` DISABLE KEYS */;
+INSERT INTO `tour` VALUES (1,'Vịnh hạ long','3 ngày 2 đêm',NULL,NULL,180000,150000,NULL,NULL,1),(2,'Nha trang','2 ngay',NULL,NULL,100000,80000,NULL,NULL,1),(3,'Sai gon','1 ngay',NULL,NULL,120000,100000,NULL,NULL,1),(4,'tour phú yên','2 ngày',NULL,NULL,200000,150000,'chuyến đi bắt đầu lúc 10h sáng','https://res.cloudinary.com/dyfc3ns2j/image/upload/v1631087509/re023am0njznkxxjn0az.jpg',1);
 /*!40000 ALTER TABLE `tour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,11 +88,11 @@ CREATE TABLE `user` (
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` bit(1) DEFAULT b'1',
   `user_role` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +101,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'nguyen','thao',0,'','','','',_binary '\0','');
+INSERT INTO `user` VALUES (4,'Thao','Phuong',0,'thao11@gmail.com',NULL,'admin11','$2a$10$jO.SqA.9qmWUfdzVpF70e.t6pB74uyDNaLH0A0FdEPsvWotTKnpMO',_binary '\0','ROLE_CLIENT');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -111,4 +114,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-31 13:18:17
+-- Dump completed on 2021-09-08 23:28:02
