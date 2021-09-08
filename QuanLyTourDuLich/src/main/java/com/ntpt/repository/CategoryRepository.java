@@ -5,14 +5,14 @@
  */
 package com.ntpt.repository;
 
-import com.ntpt.pojos.User;
+import com.ntpt.pojos.Category;
 import java.util.List;
 
 /**
  *
  * @author ntpth
  */
-public interface UserRepository {
-    boolean addUser(User user);
-    List<User> getUsers(String username);
+public interface CategoryRepository {
+    List<Category> getCategories();
+    
 }

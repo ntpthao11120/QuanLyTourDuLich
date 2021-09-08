@@ -4,6 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <!DOCTYPE tiles-definitions PUBLIC "-//ApacheSoftware Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
@@ -17,6 +18,14 @@ and open the template in the editor.
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chu" />
         <put-attribute name="content" value="/WEB-INF/jsps/index.jsp" />
+    </definition>
+    <definition name="cart" extends="baseLayout">
+        <put-attribute name="title" value="Trang chu" />
+        <put-attribute name="content" value="/WEB-INF/jsps/cart.jsp" />
+    </definition>
+    <definition name="tour" extends="baseLayout">
+        <put-attribute name="title" value="QUAN LY TOUR" />
+        <put-attribute name="content" value="/WEB-INF/jsps/tour.jsp" />
     </definition>
     <definition name="login" extends="baseLayout">
         <put-attribute name="title" value="DANG NHAP" />

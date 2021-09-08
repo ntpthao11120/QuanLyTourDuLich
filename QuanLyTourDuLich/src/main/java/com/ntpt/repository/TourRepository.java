@@ -5,14 +5,15 @@
  */
 package com.ntpt.repository;
 
-import com.ntpt.pojos.User;
+import com.ntpt.pojos.Tour;
 import java.util.List;
 
 /**
  *
  * @author ntpth
  */
-public interface UserRepository {
-    boolean addUser(User user);
-    List<User> getUsers(String username);
+public interface TourRepository {
+    List<Tour> getTours(String kw, int page);
+    long countTour();
+    boolean addOrUpdate(Tour tour);
 }

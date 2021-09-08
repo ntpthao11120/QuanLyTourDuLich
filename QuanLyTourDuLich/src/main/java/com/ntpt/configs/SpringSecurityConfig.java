@@ -5,6 +5,8 @@
  */
 package com.ntpt.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,6 +38,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     } 
+    
+    @Bean
+    public Cloudinary cloudinary(){
+        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dyfc3ns2j",
+            "api_key", "269964616445913",
+            "api_secret", "KpNVfxeNK8Yi-GDGXih_iXcniVY",
+            "secure", true
+        ));
+        
+        return c;
+    }
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

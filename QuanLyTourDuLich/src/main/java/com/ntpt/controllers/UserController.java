@@ -34,7 +34,7 @@ public class UserController {
         return "register";
     }
     
-    @PostMapping("register")
+    @PostMapping("/register")
     public String register(Model model, @ModelAttribute(value = "user") User user){
         String errMsg = "";
         if(user.getPassword().equals(user.getConfirmPassword())){

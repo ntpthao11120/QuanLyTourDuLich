@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ntpt.repository;
+package com.ntpt.service;
 
-import com.ntpt.pojos.User;
+import com.ntpt.pojos.Category;
 import java.util.List;
 
 /**
  *
  * @author ntpth
  */
-public interface UserRepository {
-    boolean addUser(User user);
-    List<User> getUsers(String username);
+public interface CategoryService {
+    List<Category> getCategories();
 }

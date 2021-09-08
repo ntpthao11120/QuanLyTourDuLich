@@ -5,31 +5,47 @@
  */
 package com.ntpt.controllers;
 
-
-import javax.persistence.Query;
-import org.hibernate.Session;
+import com.ntpt.service.CategoryService;
+import com.ntpt.service.TourService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author ntpth
  */
 @Controller
-
+@ControllerAdvice
 public class HomeController {
     @Autowired
-    private LocalSessionFactoryBean sessionFactory;
+    private CategoryService categoryService;
+    @Autowired
+    private TourService tourService;
     
     @RequestMapping(value = "/")
-    public String index(Model model) {
-        Session s = sessionFactory.getObject().openSession();
-        Query q = s.createQuery("from User");
-        model.addAttribute("users", q.getResultList());
-        s.close();
+    public String index(Model model,
+            @RequestParam(required = false, defaultValue = "") Map<String, String> params) { 
+        int page = Integer.parseInt(params.getOrDefault("page", "1")) ;
+        model.addAttribute("tours", this.tourService.getTours(params.get("kw"), page));
+        model.addAttribute("counter", this.tourService.countTour());
+        
         return "index";
     }
+    
+    @RequestMapping(value = "/cart")
+    public String cart(Model model){
+        return "cart";
+    }
+    
+    @ModelAttribute
+    public void commonAttr(Model model){
+        model.addAttribute("categories", this.categoryService.getCategories());
+    }
+
 }

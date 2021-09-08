@@ -38,6 +38,7 @@ public class UserRepositoryImplementation implements UserRepository{
             
             return true;
         }catch(HibernateException ex) {
+            session.clear();;
             System.err.println(ex.getMessage());
         }
         

@@ -13,9 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,27 +23,25 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "user")
 public class User implements Serializable{
-    public static String ADMIN = "ROLE_ADMIN";
-    public static String STAFF = "ROLE_STAFF";
-    public static String CLIENT = "ROLE_CLIENT";
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String STAFF = "ROLE_STAFF";
+    public static final String CLIENT = "ROLE_CLIENT";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "first_name")
-    @Size(min = 1, max=45, message = "{user.firstName.error.sizeMsg}")
+//    @Size(min = 1, max=45, message = "{user.firstName.error.sizeMsg}")
     private String firstName;
-    @Size(min = 1, max = 45, message = "{user.lastName.error.sizeMsg}")
+//    @Size(min = 1, max = 45, message = "{user.lastName.error.sizeMsg}")
     @Column(name = "last_name")
     private String lastName;
-    @Pattern(regexp = "\\d{10}", message = "{user.phone.error.invalidMsg}")
     private int phone;
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "{user.email.error.invalidMsg}")
     private String email;
     private String address;
-    @Size(min = 1, max = 45, message = "{user.username.error.sizeMsg}")
+//    @Size(min = 1, max = 45, message = "{user.username.error.sizeMsg}")
     private String username;
-    @NotNull(message = "{user.password.error.sizeMsg}")
+//    @NotNull(message = "{user.password.error.sizeMsg}")
     private String password;
     private boolean active;
     @Column(name = "user_role")

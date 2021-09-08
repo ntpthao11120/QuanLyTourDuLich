@@ -5,11 +5,26 @@
  */
 package com.ntpt.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.ntpt.formatter.CategoryFormatter;
+import com.ntpt.validator.TourNameValidator;
+import com.ntpt.validator.WebAppValidator;
+import java.util.HashSet;
+import java.util.Set;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -20,7 +35,13 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.ntpt.controllers")
+@EnableTransactionManagement
+@ComponentScan(basePackages ={ 
+    "com.ntpt.controllers",
+    "com.ntpt.repository",
+    "com.ntpt.service",
+    "com.ntpt.validator"
+})
 public class WebApplicationContextConfig implements WebMvcConfigurer{
     
     @Override
@@ -40,4 +61,53 @@ public class WebApplicationContextConfig implements WebMvcConfigurer{
 
         return resolver;
     }
+    
+    @Bean
+    public MessageSource messageSource(){
+        ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
+        resource.setBasename("messages");
+        return resource;
+    }
+    
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/");
+    }
+
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
+    
+    @Override
+    public void addFormatters(FormatterRegistry registry){
+        registry.addFormatter(new CategoryFormatter());
+    }
+ 
+    @Bean
+    public LocalValidatorFactoryBean validator(){
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource(messageSource());
+        return validator;
+    }
+    
+    
+    @Bean
+    public WebAppValidator tourValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new TourNameValidator());
+        
+        WebAppValidator v = new WebAppValidator();
+        v.setSpringValidators(springValidators);
+        return v;
+    }
+    
+    @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        
+        return resolver;
+    }
+
 }
